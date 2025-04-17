@@ -1,4 +1,4 @@
-package com.example.p8_vitesse.ui.home
+package com.example.p8_vitesse.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
