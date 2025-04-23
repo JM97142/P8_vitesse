@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "list_candidate")
-data class listCandidateDto(
+data class ListCandidateDto(
     @PrimaryKey(autoGenerate = true)
 
     @ColumnInfo(name = "candidate_id")
