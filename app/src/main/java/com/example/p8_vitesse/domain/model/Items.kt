@@ -1,11 +1,11 @@
-package com.example.p8_vitesse.model
+package com.example.p8_vitesse.domain.model
 
 import com.example.p8_vitesse.data.entity.ListCandidateDto
 
 data class Items(
     val id: Long = 0,
-    val name: String,
-    val firstname: String,
+    val lastName: String,
+    val firstName: String,
     val phone: String,
     val email: String,
     val birthday: String,
@@ -18,8 +18,8 @@ data class Items(
        fun fromDto(dto: ListCandidateDto) : Items {
            return Items(
                id = dto.id,
-               name = dto.listName,
-               firstname = dto.listFirstname,
+               lastName = dto.listName,
+               firstName = dto.listFirstname,
                phone = dto.listPhone,
                email = dto.listEmail,
                birthday = dto.listBirthday,
@@ -33,16 +33,16 @@ data class Items(
 
     fun toDto(): ListCandidateDto {
         return ListCandidateDto(
-            id = this.id,
-            listName = this.name,
-            listFirstname = this.firstname,
-            listPhone = this.phone,
-            listEmail = this.email,
-            listBirthday = this.birthday,
-            listWage = this.wage,
-            listNote = this.note,
-            listFavorite = this.favorite,
-            listPicture = this.picture
+            id = id,
+            listName = lastName,
+            listFirstname = firstName,
+            listPhone = phone,
+            listEmail = email,
+            listBirthday = birthday,
+            listWage = wage,
+            listNote = note,
+            listFavorite = favorite,
+            listPicture = picture
 
 
         )

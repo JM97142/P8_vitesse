@@ -9,7 +9,7 @@ data class ListCandidateDto(
     @PrimaryKey(autoGenerate = true)
 
     @ColumnInfo(name = "candidate_id")
-    var id: Long,
+    var id: Long = 0,
 
     @ColumnInfo(name = "candidate_name")
     var listName: String,

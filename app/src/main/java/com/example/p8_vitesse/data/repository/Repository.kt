@@ -1,9 +1,8 @@
 package com.example.p8_vitesse.data.repository
 
 import com.example.p8_vitesse.data.dao.ListCandidateDao
-import com.example.p8_vitesse.model.Items
+import com.example.p8_vitesse.domain.model.Items
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
 class Repository(private val listCandidateDao: ListCandidateDao) {
 

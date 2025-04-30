@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">P8-Vitesse</string>
+    <string name="add_button">add candidat</string>
+    <string name="tab_item_1">Tous</string>
+    <string name="tab_item_2">Favoris</string>
+    <string name="search">Rechercher un candidat</string>
+    <string name="no_candidate">Aucun candidat</string>
 </resources>

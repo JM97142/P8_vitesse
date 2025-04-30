@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_candidate" >
+
+    <ImageView
+        android:id="@+id/img_candidate"
+        android:layout_width="56dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/vitess_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="300dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/img_candidate"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="John DOE" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="25dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_candidate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut accumsan risus ac vestibulum aliquet. Aenean non consequat ante, interdum ultrices mi" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

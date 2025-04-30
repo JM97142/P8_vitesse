@@ -3,6 +3,7 @@ package com.example.p8_vitesse.data.di
 import android.content.Context
 import com.example.p8_vitesse.data.dao.ListCandidateDao
 import com.example.p8_vitesse.data.database.AppDatabase
+import com.example.p8_vitesse.data.repository.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +30,10 @@ class AppModule {
     @Provides
     fun provideCandidateDao(appDatabase: AppDatabase): ListCandidateDao {
         return appDatabase.listCandidateDao()
+    }
+
+    @Provides
+    fun provideRepository(candidateDao: ListCandidateDao): Repository {
+        return Repository(candidateDao)
     }
 }

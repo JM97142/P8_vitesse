@@ -49,7 +49,7 @@ abstract class AppDatabase: RoomDatabase() {
         suspend fun populateDatabase(listCandidateDao: ListCandidateDao) {
             println("populate")
 
-            listCandidateDao.insertCandidate(
+            val candidates = listOf(
                 ListCandidateDto(
                     id = 1,
                     listName = "Doe",
@@ -61,9 +61,35 @@ abstract class AppDatabase: RoomDatabase() {
                     listNote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque maximus porttitor tortor eu congue.",
                     listFavorite = false,
                     listPicture = null
+                ),
+                ListCandidateDto(
+                    id = 2,
+                    listName = "Doe",
+                    listFirstname = "Jane",
+                    listPhone = "0123456789",
+                    listEmail = "joedoe@example.com",
+                    listBirthday = "01/01/1911",
+                    listWage = 1500.0,
+                    listNote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque maximus porttitor tortor eu congue.",
+                    listFavorite = false,
+                    listPicture = null
+                ),
+                ListCandidateDto(
+                    id = 3,
+                    listName = "Doe",
+                    listFirstname = "Jean",
+                    listPhone = "0123456789",
+                    listEmail = "joedoe@example.com",
+                    listBirthday = "01/01/1911",
+                    listWage = 2000.0,
+                    listNote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque maximus porttitor tortor eu congue.",
+                    listFavorite = false,
+                    listPicture = null
                 )
-
             )
+            candidates.forEach {
+                listCandidateDao.insertCandidate(it)
+            }
         }
     }
 }
