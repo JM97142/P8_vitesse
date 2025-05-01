@@ -43,8 +43,6 @@ data class Items(
             listNote = note,
             listFavorite = favorite,
             listPicture = picture
-
-
         )
     }
 }

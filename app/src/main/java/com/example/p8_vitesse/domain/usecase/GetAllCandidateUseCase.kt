@@ -1,4 +1,4 @@
-package com.example.p8_vitesse.domain
+package com.example.p8_vitesse.domain.usecase
 
 import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items

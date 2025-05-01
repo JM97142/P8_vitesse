@@ -2,22 +2,28 @@ package com.example.p8_vitesse.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import com.example.p8_vitesse.databinding.ItemBinding
 import com.example.p8_vitesse.domain.model.Items
-import com.example.p8_vitesse.ui.home.allCandidates.AllCandidatesFragment
 
-class CandidatesAdapter(allCandidatesFragment: AllCandidatesFragment) :
-    ListAdapter<Items, CandidatesAdapter.CandidateViewHolder>(
+class CandidatesAdapter(
+    private val onItemClick: (Items) -> Unit
+): ListAdapter<Items, CandidatesAdapter.CandidateViewHolder>(
         DIFF_CALLBACK
     ) {
 
-    inner class CandidateViewHolder(binding: ItemBinding): RecyclerView.ViewHolder(binding.root) {
-        var candidateName: TextView = binding.tvName
-        var candidateDescription: TextView = binding.tvDescription
+    inner class CandidateViewHolder(private val binding: ItemBinding):
+        RecyclerView.ViewHolder(binding.root) {
+            fun bind(items: Items) {
+                binding.tvName.text = "${items.firstName} ${items.lastName.uppercase()}"
+                binding.tvDescription.text = items.note
+
+                binding.root.setOnClickListener {
+                    onItemClick(items)
+                }
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CandidateViewHolder {
@@ -30,22 +36,14 @@ class CandidatesAdapter(allCandidatesFragment: AllCandidatesFragment) :
     }
 
     override fun onBindViewHolder(holder: CandidateViewHolder, position: Int) {
-        val item = getItem(position)
-
-        holder.candidateName.text = item.firstName + " " + item.lastName.uppercase()
-        holder.candidateDescription.text = item.note
+        holder.bind(getItem(position))
     }
 
     companion object {
         private val DIFF_CALLBACK: DiffUtil.ItemCallback<Items> =
             object : DiffUtil.ItemCallback<Items>() {
-                override fun areItemsTheSame(oldItem: Items, newItem: Items): Boolean {
-                    return oldItem === newItem
-                }
-
-                override fun areContentsTheSame(oldItem: Items, newItem: Items): Boolean {
-                    return oldItem == newItem
-                }
+                override fun areItemsTheSame(old: Items, new: Items) = old.id == new.id
+                override fun areContentsTheSame(old: Items, new: Items): Boolean = old == new
             }
     }
 }

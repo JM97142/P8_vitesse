@@ -1,9 +1,10 @@
-package com.example.p8_vitesse.ui.home.allCandidates
+package com.example.p8_vitesse.ui.home.candidatesFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AllCandidatesFragment: Fragment() {
+class FavoritesFragment: Fragment() {
     private var _binding: RecyclerCandidatesBinding? = null
     private val binding get() = _binding!!
 
@@ -38,20 +39,22 @@ class AllCandidatesFragment: Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.candidates.collect { candidates ->
-                candidatesAdapter.submitList(candidates)
+                val favs = candidates.filter { it.favorite }
+                candidatesAdapter.submitList(favs)
                 binding.loading.visibility = View.GONE
             }
         }
     }
 
     private fun setRecyclerView() {
-        candidatesAdapter = CandidatesAdapter(this)
+        candidatesAdapter = CandidatesAdapter { item ->
+            Toast.makeText(
+                requireContext(),
+                "Tu as cliqué sur ${item.firstName} ${item.lastName}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         binding.recyclerviewCandidate.layoutManager = LinearLayoutManager(context)
         binding.recyclerviewCandidate.adapter = candidatesAdapter
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.p8_vitesse.R
 import com.example.p8_vitesse.databinding.ActivityMainBinding
 import com.example.p8_vitesse.ui.home.ViewPagerAdapter
-import com.example.p8_vitesse.ui.home.allCandidates.AllCandidatesViewModel
+import com.example.p8_vitesse.ui.home.candidatesFragments.AllCandidatesViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 

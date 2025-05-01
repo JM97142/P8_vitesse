@@ -39,6 +39,7 @@ abstract class AppDatabase: RoomDatabase() {
                     AppDatabase::class.java,
                     "VitesseDB"
                 )
+                    .fallbackToDestructiveMigration(dropAllTables = true)
                     .addCallback(AppDatabaseCallback(coroutineScope))
                     .build()
                 INSTANCE = instance
@@ -71,7 +72,7 @@ abstract class AppDatabase: RoomDatabase() {
                     listBirthday = "01/01/1911",
                     listWage = 1500.0,
                     listNote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque maximus porttitor tortor eu congue.",
-                    listFavorite = false,
+                    listFavorite = true,
                     listPicture = null
                 ),
                 ListCandidateDto(
