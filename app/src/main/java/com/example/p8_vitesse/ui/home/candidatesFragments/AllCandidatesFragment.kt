@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.p8_vitesse.databinding.RecyclerCandidatesBinding
 import com.example.p8_vitesse.domain.model.Items
+import com.example.p8_vitesse.ui.candidateDetails.CandidateDetailActivity
 import com.example.p8_vitesse.ui.home.CandidatesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -49,11 +50,8 @@ class AllCandidatesFragment: Fragment() {
 
     private fun setRecyclerView() {
         candidatesAdapter = CandidatesAdapter { item ->
-            Toast.makeText(
-                requireContext(),
-                "Tu as cliqué sur ${item.firstName} ${item.lastName}",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent = CandidateDetailActivity.createIntent(requireContext(), item.id)
+            startActivity(intent)
         }
         binding.recyclerviewCandidate.layoutManager = LinearLayoutManager(context)
         binding.recyclerviewCandidate.adapter = candidatesAdapter

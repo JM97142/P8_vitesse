@@ -5,4 +5,16 @@
     <string name="tab_item_2">Favoris</string>
     <string name="search">Rechercher un candidat</string>
     <string name="no_candidate">Aucun candidat</string>
+    <string name="back">Retour</string>
+    <string name="favorites">Favoris</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
+    <string name="candidate_img">Photo candidat</string>
+    <string name="phone">Appel</string>
+    <string name="message">SMS</string>
+    <string name="email">E-mail</string>
+    <string name="about">A propos</string>
+    <string name="birthday">Anniversaire</string>
+    <string name="wage">Prétentions salariales</string>
+    <string name="note">Notes</string>
 </resources>
