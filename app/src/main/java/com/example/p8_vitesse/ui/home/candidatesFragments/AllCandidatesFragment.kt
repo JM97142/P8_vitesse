@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +21,7 @@ class AllCandidatesFragment: Fragment() {
     private var _binding: RecyclerCandidatesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AllCandidatesViewModel by viewModels()
+    private val viewModel: AllCandidatesViewModel by activityViewModels()
     private lateinit var candidatesAdapter: CandidatesAdapter
     private lateinit var listCandidates: List<Items>
 
@@ -41,7 +41,7 @@ class AllCandidatesFragment: Fragment() {
         setRecyclerView()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.candidates.collect { candidates ->
+            viewModel.filtered.collect { candidates ->
                 candidatesAdapter.submitList(candidates)
                 binding.loading.visibility = View.GONE
             }
