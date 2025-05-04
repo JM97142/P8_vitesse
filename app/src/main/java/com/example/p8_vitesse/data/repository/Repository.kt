@@ -16,4 +16,8 @@ class Repository(
             .map { Items.fromDto(it) }
         return candidates
     }
+
+    suspend fun getCandidateById(id: Long): Items {
+        return listCandidateDao.getCandidateById(id).let { Items.fromDto(it) }
+    }
 }

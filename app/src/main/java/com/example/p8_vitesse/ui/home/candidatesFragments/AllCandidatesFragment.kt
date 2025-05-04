@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.p8_vitesse.databinding.RecyclerCandidatesBinding
-import com.example.p8_vitesse.domain.model.Items
 import com.example.p8_vitesse.ui.candidateDetails.CandidateDetailActivity
 import com.example.p8_vitesse.ui.home.CandidatesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +21,6 @@ class AllCandidatesFragment: Fragment() {
 
     private val viewModel: AllCandidatesViewModel by activityViewModels()
     private lateinit var candidatesAdapter: CandidatesAdapter
-    private lateinit var listCandidates: List<Items>
 
     override fun onCreateView(
         inflater: LayoutInflater,
