@@ -1,5 +1,6 @@
 package com.example.p8_vitesse.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -9,8 +10,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.p8_vitesse.R
 import com.example.p8_vitesse.databinding.ActivityMainBinding
+import com.example.p8_vitesse.ui.addCandidate.AddCandidateActivity
 import com.example.p8_vitesse.ui.home.ViewPagerAdapter
 import com.example.p8_vitesse.ui.home.candidatesFragments.AllCandidatesViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.search.SearchBar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         setupSearch()
         setTableLayout()
+        setupFab()
     }
 
     private fun setTableLayout() {
@@ -58,6 +62,13 @@ class MainActivity : AppCompatActivity() {
             val query = editable?.toString().orEmpty()
             viewModel.setQuery(query)
             binding.searchBar.setText(query)
+        }
+    }
+
+    private fun setupFab() {val fab = findViewById<FloatingActionButton>(R.id.fab_add)
+        fab.setOnClickListener {
+            val intent = Intent(this, AddCandidateActivity::class.java)
+            startActivity(intent)
         }
     }
 }

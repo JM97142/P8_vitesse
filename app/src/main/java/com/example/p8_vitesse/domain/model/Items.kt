@@ -1,6 +1,7 @@
 package com.example.p8_vitesse.domain.model
 
 import com.example.p8_vitesse.data.entity.ListCandidateDto
+import java.time.LocalDate
 
 data class Items(
     val id: Long = 0,

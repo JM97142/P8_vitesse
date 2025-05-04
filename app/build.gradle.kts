@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.p8_vitesse"
-        minSdk = 24
+        minSdk = 26
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
         versionCode = 1

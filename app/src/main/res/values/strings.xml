@@ -16,5 +16,13 @@
     <string name="about">A propos</string>
     <string name="birthday">Anniversaire</string>
     <string name="wage">Prétentions salariales</string>
-    <string name="note">Notes</string>
+    <string name="note">Note</string>
+    <string name="add_title">Ajouter un candidat</string>
+    <string name="firstname">Prénom</string>
+    <string name="lastname">Nom</string>
+    <string name="selectDate">Sélectionner une date</string>
+    <string name="enterDate">Entrer une date</string>
+    <string name="money">icon money</string>
+    <string name="salary">Prétentions salariales</string>
+    <string name="save">Sauvegarder</string>
 </resources>
