@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items
 import com.example.p8_vitesse.domain.usecase.GetCandidateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

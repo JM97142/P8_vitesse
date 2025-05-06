@@ -31,6 +31,7 @@
                     app:title="@string/add_title" />
             </com.google.android.material.appbar.AppBarLayout>
 
+            <!-- Firstname Input -->
             <ImageView
                 android:id="@+id/img_add"
                 android:layout_width="375dp"
@@ -74,13 +75,13 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Name Input -->
+            <!-- Lastname Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/last_name_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="45dp"
                 android:hint="@string/lastname"
@@ -97,18 +98,18 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Phone Input -->
             <ImageView
                 android:id="@+id/phoneIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:contentDescription="@string/phone"
                 android:src="@drawable/ic_phone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/phone_input_layout" />
 
-            <!-- Phone Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phone_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -132,12 +133,13 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Email Input -->
             <ImageView
                 android:id="@+id/mailIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:hint="@string/email"
                 android:contentDescription="@string/email"
                 android:src="@drawable/ic_email"
@@ -145,7 +147,6 @@
                 app:layout_constraintTop_toTopOf="@+id/email_input_layout"
                 tools:ignore="ContentDescription" />
 
-            <!-- Email Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -269,7 +270,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:contentDescription="@string/money"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/salarial_input_layout"
@@ -302,7 +303,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:contentDescription="@string/note"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/notes_input_layout"

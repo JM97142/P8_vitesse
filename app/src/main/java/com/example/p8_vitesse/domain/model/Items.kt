@@ -1,7 +1,6 @@
 package com.example.p8_vitesse.domain.model
 
 import com.example.p8_vitesse.data.entity.ListCandidateDto
-import java.time.LocalDate
 
 data class Items(
     val id: Long = 0,
@@ -16,20 +15,20 @@ data class Items(
     var favorite: Boolean
 ) {
     companion object {
-       fun fromDto(dto: ListCandidateDto) : Items {
-           return Items(
-               id = dto.id,
-               lastName = dto.listName,
-               firstName = dto.listFirstname,
-               phone = dto.listPhone,
-               email = dto.listEmail,
-               birthday = dto.listBirthday,
-               wage = dto.listWage,
-               note = dto.listNote,
-               favorite = dto.listFavorite,
-               picture = dto.listPicture
-           )
-       }
+        fun fromDto(dto: ListCandidateDto) : Items {
+            return Items(
+                id = dto.id,
+                lastName = dto.listName,
+                firstName = dto.listFirstname,
+                phone = dto.listPhone,
+                email = dto.listEmail,
+                birthday = dto.listBirthday,
+                wage = dto.listWage,
+                note = dto.listNote,
+                favorite = dto.listFavorite,
+                picture = dto.listPicture
+            )
+        }
     }
 
     fun toDto(): ListCandidateDto {
