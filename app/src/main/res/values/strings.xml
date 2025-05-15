@@ -18,6 +18,7 @@
     <string name="wage">Prétentions salariales</string>
     <string name="note">Note</string>
     <string name="add_title">Ajouter un candidat</string>
+    <string name="edit_title">Modifier un candidat</string>
     <string name="firstname">Prénom</string>
     <string name="lastname">Nom</string>
     <string name="selectDate">Sélectionner une date</string>

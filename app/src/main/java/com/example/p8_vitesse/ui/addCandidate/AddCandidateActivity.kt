@@ -42,7 +42,7 @@ class AddCandidateActivity: AppCompatActivity() {
     }
 
     private fun setForm() {
-        val candidateImage = findViewById<ImageView>(R.id.img_add)
+        candidateImage = findViewById<ImageView>(R.id.img_add)
         val firstNameField = findViewById<TextInputEditText>(R.id.first_name)
         val lastNameField = findViewById<TextInputEditText>(R.id.last_name)
         val phoneField = findViewById<TextInputEditText>(R.id.phone)

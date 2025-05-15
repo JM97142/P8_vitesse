@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items
+import com.example.p8_vitesse.domain.usecase.DeleteCandidateUseCase
 import com.example.p8_vitesse.domain.usecase.GetCandidateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class CandidateDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getCandidateUseCase: GetCandidateUseCase
+    private val getCandidateUseCase: GetCandidateUseCase,
+    private val deleteCandidateUseCase: DeleteCandidateUseCase,
+    private val repository: Repository
 ): ViewModel() {
 
     private val candidateId: Long = savedStateHandle[CandidateDetailActivity.EXTRA_CANDIDATE_ID] ?: -1L
@@ -32,6 +35,22 @@ class CandidateDetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val result = getCandidateUseCase.execute(candidateId)
             _candidate.postValue(result)
+        }
+    }
+
+    fun toggleFavorite() {
+        val current = _candidate.value ?: return
+        val updated = current.copy(favorite = !current.favorite)
+        _candidate.value = updated
+
+        viewModelScope.launch {
+            repository.updateCandidate(updated)
+        }
+    }
+
+    fun deleteCandidate(id: Long) {
+        viewModelScope.launch {
+            deleteCandidateUseCase.execute(id)
         }
     }
 }

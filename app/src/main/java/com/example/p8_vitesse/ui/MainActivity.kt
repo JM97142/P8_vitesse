@@ -14,7 +14,6 @@ import com.example.p8_vitesse.ui.addCandidate.AddCandidateActivity
 import com.example.p8_vitesse.ui.home.ViewPagerAdapter
 import com.example.p8_vitesse.ui.home.candidatesFragments.AllCandidatesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.search.SearchBar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupSearch() {
         binding.searchBar.setOnClickListener {
             binding.svSearch.show()
+            binding.svSearch.requestFocus()
         }
 
         binding.svSearch.editText.addTextChangedListener { editable ->
@@ -65,7 +65,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupFab() {val fab = findViewById<FloatingActionButton>(R.id.fab_add)
+    private fun setupFab() {
+        val fab = findViewById<FloatingActionButton>(R.id.fab_add)
         fab.setOnClickListener {
             val intent = Intent(this, AddCandidateActivity::class.java)
             startActivity(intent)
