@@ -1,5 +1,6 @@
 package com.example.p8_vitesse.ui.addCandidate
 
+import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -13,6 +14,9 @@ import com.example.p8_vitesse.domain.model.Items
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 class AddCandidateActivity: AppCompatActivity() {
@@ -36,6 +40,7 @@ class AddCandidateActivity: AppCompatActivity() {
         setForm()
     }
 
+    // Configuration de retour en arrière
     private fun setToolbar() {
         val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
@@ -56,6 +61,27 @@ class AddCandidateActivity: AppCompatActivity() {
             pickImageLauncher.launch("image/*")
         }
 
+        // Configuration du DatePicker
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        dateField.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { _, year, month, dayOfMonth ->
+                    calendar.set(Calendar.YEAR, year)
+                    calendar.set(Calendar.MONTH, month)
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    dateField.setText(dateFormat.format(calendar.time))
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            datePickerDialog.show()
+        }
+
+        // Configuration de la sauvegarde
         saveButton.setOnClickListener {
             // Récupère les valeurs des champs de saisie
             val firstName = firstNameField.text.toString().trim()

@@ -27,6 +27,8 @@ class AllCandidatesViewModel @Inject constructor(
 
     private val _candidates = MutableStateFlow<List<Items>>(emptyList())
 
+    //val candidates = _candidates.asStateFlow()
+
     val candidates: StateFlow<List<Items>> = repository.fetchAllCandidatesFlow()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 

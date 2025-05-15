@@ -30,7 +30,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/img_candidate"
             android:layout_width="375dp"
             android:layout_height="195dp"
             android:layout_marginTop="14dp"
@@ -52,7 +52,7 @@
             app:iconTint="@null"
             app:layout_constraintEnd_toStartOf="@id/smsIconButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image" />
+            app:layout_constraintTop_toBottomOf="@+id/img_candidate" />
 
         <TextView
             android:id="@+id/callText"

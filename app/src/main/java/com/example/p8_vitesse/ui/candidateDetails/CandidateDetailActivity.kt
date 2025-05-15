@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.p8_vitesse.R
 import com.example.p8_vitesse.databinding.ActivityCandidateDetailsBinding
 import com.example.p8_vitesse.domain.model.Items
@@ -58,21 +59,36 @@ class CandidateDetailActivity: AppCompatActivity() {
         viewModel.candidate.observe(this) { candidate ->
             candidate?.let {
                 binding.topAppBar.title = "${it.firstName} ${it.lastName}"
-                // binding.aboutAge.text = formatBirthday(it.birthday)
                 binding.eurosSalary.text = "${it.wage} €"
                 binding.poundSalary.text = "soit £ ${convertToPound(it.wage)}"
                 binding.notesValue.text = it.note
-
+                // Format date + âge
+                candidate.birthday?.let {
+                    val formatted = formatBirthday(it)
+                    binding.aboutAge.text = formatted
+                }
+                // Charge l’image avec Glide
+                if (!candidate.picture.isNullOrEmpty()) {
+                    Glide.with(this)
+                        .load(candidate.picture)
+                        .placeholder(R.drawable.image_placeholder) // image par défaut si null
+                        .into(binding.imgCandidate)
+                }
                 // TODO: Glide.with(this).load(it.imageUrl).into(imageView)
             }
         }
     }
 
-    /* private fun formatBirthday(birthDate: LocalDate): String {
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val age = Period.between(birthDate, LocalDate.now()).years
-        return "${birthDate.format(formatter)} ($age ans)"
-    }*/
+    private fun formatBirthday(birthday: String): String {
+        return try {
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            val birthDate = LocalDate.parse(birthday, formatter)
+            val age = Period.between(birthDate, LocalDate.now()).years
+            "${birthDate.format(formatter)} ($age ans)"
+        } catch (e: Exception) {
+            "Date invalide"
+        }
+    }
 
     @SuppressLint("DefaultLocale")
     private fun convertToPound(euros: Double): String {
@@ -83,12 +99,12 @@ class CandidateDetailActivity: AppCompatActivity() {
     private fun setDeleteButton() {
         binding.topAppBar.menu.findItem(R.id.ic_delete).setOnMenuItemClickListener {
             MaterialAlertDialogBuilder(this)
-                .setTitle("Supprimer ?")
-                .setMessage("Test")
+                .setTitle("Suppression")
+                .setMessage("Etes-vous sur de vouloir supprimer ce candidat ? Cette action est irréversible")
                 .setNegativeButton("Annuler") { dialog, _ ->
                     dialog.dismiss()
                 }
-                .setPositiveButton("Supprimer") { _, _ ->
+                .setPositiveButton("Confirmer") { _, _ ->
                     val candidateId = intent.getLongExtra(EXTRA_CANDIDATE_ID, -1L)
                     if (candidateId != -1L) {
                         viewModel.deleteCandidate(candidateId)

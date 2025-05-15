@@ -17,6 +17,8 @@ constraintlayout = "2.2.1"
 roomCommon = "2.7.0-rc02"
 roomKtx = "2.7.0-rc02"
 roomRuntimeAndroid = "2.7.0-rc02"
+glide = "4.16.0"
+glideCompiler = "4.16.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
@@ -37,6 +39,8 @@ kapt-hilt = { group = "com.google.dagger", name = "hilt-android-compiler", versi
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideCompiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
