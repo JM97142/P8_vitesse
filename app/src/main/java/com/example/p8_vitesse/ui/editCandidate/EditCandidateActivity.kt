@@ -11,10 +11,14 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.example.p8_vitesse.databinding.ActivityEditCandidateBinding
 import com.example.p8_vitesse.domain.model.Items
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -64,8 +68,15 @@ class EditCandidateActivity : AppCompatActivity() {
         }
 
         // Remplit le formulaire avec les données reçues
-        viewModel.candidate.observe(this) { candidate ->
+        /*viewModel.candidate.observe(this) { candidate ->
             candidate?.let { fillFormWithCandidateData(it) }
+        }*/
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.candidate.collect { candidate ->
+                    candidate?.let { fillFormWithCandidateData(it) }
+                }
+            }
         }
 
         binding.filledButton.setOnClickListener {

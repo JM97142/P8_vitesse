@@ -9,6 +9,9 @@ import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,9 +23,10 @@ class CandidateDetailViewModel @Inject constructor(
     // Récupère l'ID du candidat depuis l'intent (via SavedStateHandle)
     private val candidateId: Long = savedStateHandle[CandidateDetailActivity.EXTRA_CANDIDATE_ID] ?: -1L
 
-    // LiveData contenant le candidat courant
-    private val _candidate = MutableLiveData<Items?>()
-    val candidate: LiveData<Items?> = _candidate
+    // Flow interne : représente l'état actuel du candidat
+    private val _candidate = MutableStateFlow<Items?>(null)
+    // Flow public exposé à l'UI
+    val candidate: StateFlow<Items?> = _candidate.asStateFlow()
 
     init {
         loadCandidate()
@@ -32,7 +36,7 @@ class CandidateDetailViewModel @Inject constructor(
     private fun loadCandidate() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getCandidateById(candidateId)
-            _candidate.postValue(result)
+            _candidate.value = result
         }
     }
 
@@ -45,6 +49,7 @@ class CandidateDetailViewModel @Inject constructor(
     fun toggleFavorite() {
         val current = _candidate.value ?: return
         val updated = current.copy(favorite = !current.favorite)
+
         _candidate.value = updated
 
         viewModelScope.launch {

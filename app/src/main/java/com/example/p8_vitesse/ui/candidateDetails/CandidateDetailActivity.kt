@@ -6,6 +6,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.example.p8_vitesse.R
 import com.example.p8_vitesse.databinding.ActivityCandidateDetailsBinding
@@ -13,6 +16,7 @@ import com.example.p8_vitesse.domain.model.Items
 import com.example.p8_vitesse.ui.editCandidate.EditCandidateActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -42,9 +46,12 @@ class CandidateDetailActivity: AppCompatActivity() {
         setEditButton() // Bouton de modification
         setFavoriteButton() // Bouton favoris
 
-        viewModel.candidate.observe(this) { candidate ->
-            candidate?.let {
-                bindCandidateData(it)
+        // Collecte du StateFlow dans une coroutine lifecycle-aware
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.candidate.collect { candidate ->
+                    candidate?.let { bindCandidateData(it) }
+                }
             }
         }
     }
@@ -64,27 +71,23 @@ class CandidateDetailActivity: AppCompatActivity() {
     // Remplit les vues avec les infos du candidat
     @SuppressLint("SetTextI18n")
     private fun bindCandidateData(candidate: Items) {
-        viewModel.candidate.observe(this) { candidate ->
-            candidate?.let {
-                binding.topAppBar.title = "${it.firstName} ${it.lastName}"
-                binding.eurosSalary.text = "${it.wage} €"
-                binding.poundSalary.text = "soit £ ${convertToPound(it.wage)}"
-                binding.notesValue.text = it.note
-                // Format date + âge
-                candidate.birthday?.let {
-                    val formatted = formatBirthday(it)
-                    binding.aboutAge.text = formatted
-                }
-                // Charge l’image avec Glide
-                if (!candidate.picture.isNullOrEmpty()) {
-                    Glide.with(this)
-                        .load(candidate.picture)
-                        .placeholder(R.drawable.image_placeholder) // image par défaut si null
-                        .into(binding.imgCandidate)
-                }
-                // TODO: Glide.with(this).load(it.imageUrl).into(imageView)
-            }
+        binding.topAppBar.title = "${candidate.firstName} ${candidate.lastName}"
+        binding.eurosSalary.text = "${candidate.wage} €"
+        binding.poundSalary.text = "soit £ ${convertToPound(candidate.wage)}"
+        binding.notesValue.text = candidate.note
+        // Format date + âge
+        candidate.birthday?.let {
+            val formatted = formatBirthday(it)
+            binding.aboutAge.text = formatted
         }
+        // Charge l’image avec Glide
+        if (!candidate.picture.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(candidate.picture)
+                .placeholder(R.drawable.image_placeholder) // image par défaut si null
+                .into(binding.imgCandidate)
+        }
+        // TODO: Glide.with(this).load(it.imageUrl).into(imageView)
     }
 
     // Formate la date de naissance et calcule l'âge
@@ -146,12 +149,16 @@ class CandidateDetailActivity: AppCompatActivity() {
     private fun setFavoriteButton() {
         val favoriteItem = binding.topAppBar.menu.findItem(R.id.ic_favorite)
         // Mise à jour de l'icône
-        viewModel.candidate.observe(this) { candidate ->
-            if (candidate != null) {
-                favoriteItem.setIcon(
-                    if (candidate.favorite) R.drawable.star_inline
-                    else R.drawable.star_outline
-                )
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.candidate.collect { candidate ->
+                    candidate?.let {
+                        favoriteItem.setIcon(
+                            if (it.favorite) R.drawable.star_inline
+                            else R.drawable.star_outline
+                        )
+                    }
+                }
             }
         }
         // Clique sur l’icône : inverse l'état du favori

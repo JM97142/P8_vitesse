@@ -8,6 +8,9 @@ import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,14 +19,16 @@ class EditCandidateViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _candidate = MutableLiveData<Items?>() // Stock le candidat chargé
-    val candidate: LiveData<Items?> = _candidate
+    // Flow interne : représente l'état actuel du candidat
+    private val _candidate = MutableStateFlow<Items?>(null)
+    // Flow public exposé à l'UI
+    val candidate: StateFlow<Items?> = _candidate.asStateFlow()
 
     // Charge un candidat depuis la base via son ID
     fun loadCandidate(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getCandidateById(id)
-            _candidate.postValue(result)
+            _candidate.value = result
         }
     }
 
