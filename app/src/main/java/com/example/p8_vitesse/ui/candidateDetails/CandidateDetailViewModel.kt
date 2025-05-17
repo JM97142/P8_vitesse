@@ -36,6 +36,11 @@ class CandidateDetailViewModel @Inject constructor(
         }
     }
 
+    // Rafraîchissement depuis la base de données
+    fun refreshCandidate() {
+        loadCandidate()
+    }
+
     // Gestion de l’état "favori" du candidat
     fun toggleFavorite() {
         val current = _candidate.value ?: return

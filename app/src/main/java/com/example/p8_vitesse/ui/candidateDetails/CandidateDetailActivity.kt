@@ -49,6 +49,12 @@ class CandidateDetailActivity: AppCompatActivity() {
         }
     }
 
+    // Recharge les infos du candidat depuis la BDD après modification
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshCandidate()
+    }
+
     // Gère le bouton retour de la toolbar
     private fun setBack() {
         binding.topAppBar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
