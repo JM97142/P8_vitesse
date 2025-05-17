@@ -20,13 +20,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     private val viewModel: AllCandidatesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // Applique les marges système (barres de statut/navigation)
         binding = ActivityMainBinding.inflate(layoutInflater)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -34,12 +34,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setContentView(binding.root)
-
-        setupSearch()
-        setTableLayout()
-        setupFab()
+        setupSearch() // Barre de recherche
+        setTableLayout() // Tabs et ViewPager
+        setupFab() // Bouton ajout candidat
     }
 
+    // Configuration des onglets (All / favorites)
     private fun setTableLayout() {
         val adapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = adapter
@@ -52,12 +52,13 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 
+    // Configuration de la logique de recherche
     private fun setupSearch() {
         binding.searchBar.setOnClickListener {
             binding.svSearch.show()
             binding.svSearch.requestFocus()
         }
-
+        // Mise à jour du query dans le ViewModel à chaque saisie
         binding.svSearch.editText.addTextChangedListener { editable ->
             val query = editable?.toString().orEmpty()
             viewModel.setQuery(query)
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Configuration du bouton ajout d'un candidat
     private fun setupFab() {
         val fab = findViewById<FloatingActionButton>(R.id.fab_add)
         fab.setOnClickListener {

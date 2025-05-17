@@ -25,6 +25,8 @@ class AddCandidateActivity: AppCompatActivity() {
 
     private lateinit var candidateImage: ImageView
     private var imageUri: Uri? = null
+
+    // Lanceur pour sélectionner une image
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             imageUri = it
@@ -36,16 +38,17 @@ class AddCandidateActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_candidate)
 
-        setToolbar()
-        setForm()
+        setToolbar() // Barre supérieure
+        setForm() // Formulaire
     }
 
-    // Configuration de retour en arrière
+    // Configuration de bouton retour en arrière
     private fun setToolbar() {
         val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
+    // Initialise les composants du formulaire
     private fun setForm() {
         candidateImage = findViewById<ImageView>(R.id.img_add)
         val firstNameField = findViewById<TextInputEditText>(R.id.first_name)
@@ -57,11 +60,12 @@ class AddCandidateActivity: AppCompatActivity() {
         val notesField = findViewById<TextInputEditText>(R.id.notes)
         val saveButton = findViewById<Button>(R.id.filledButton)
 
+        // Ouvre la galerie pour choisir une image
         candidateImage.setOnClickListener {
             pickImageLauncher.launch("image/*")
         }
 
-        // Configuration du DatePicker
+        // Configuration du sélecteur de date
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
@@ -81,7 +85,7 @@ class AddCandidateActivity: AppCompatActivity() {
             datePickerDialog.show()
         }
 
-        // Configuration de la sauvegarde
+        // Configuration de la sauvegarde d'un candidat
         saveButton.setOnClickListener {
             // Récupère les valeurs des champs de saisie
             val firstName = firstNameField.text.toString().trim()
@@ -98,6 +102,7 @@ class AddCandidateActivity: AppCompatActivity() {
                 Toast.makeText(this, "Tous les champs doivent être remplis", Toast.LENGTH_SHORT)
                     .show()
             } else {
+                // Création d'un objet Items et l’envoie au ViewModel
                 val newCandidate = Items(
                     firstName = firstName,
                     lastName = lastName,

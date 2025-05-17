@@ -25,6 +25,7 @@ class EditCandidateActivity : AppCompatActivity() {
     private val viewModel: EditCandidateViewModel by viewModels()
 
     private var imageUri: Uri? = null
+    // Lanceur pour sélectionner une image
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             imageUri = it
@@ -34,7 +35,7 @@ class EditCandidateActivity : AppCompatActivity() {
 
     companion object {
         private const val EXTRA_CANDIDATE_ID = "extra_candidate_id"
-
+        // Méthode pour créer un Intent vers cette activité avec l'ID candidat
         fun createIntent(context: Context, candidateId: Long): Intent {
             return Intent(context, EditCandidateActivity::class.java).apply {
                 putExtra(EXTRA_CANDIDATE_ID, candidateId)
@@ -45,8 +46,9 @@ class EditCandidateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditCandidateBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbar()
+        setToolbar() // Barre supérieur
 
+        // Ouvre la galerie pour choisir une image
         binding.imgUpdate.setOnClickListener {
             pickImageLauncher.launch("image/*")
         }
@@ -55,11 +57,13 @@ class EditCandidateActivity : AppCompatActivity() {
             showDatePicker()
         }
 
+        // Charge les données du candidat via ViewModel
         val candidateId = intent.getLongExtra(EXTRA_CANDIDATE_ID, -1L)
         if (candidateId != -1L) {
             viewModel.loadCandidate(candidateId)
         }
 
+        // Remplit le formulaire avec les données reçues
         viewModel.candidate.observe(this) { candidate ->
             candidate?.let { fillFormWithCandidateData(it) }
         }
@@ -79,6 +83,7 @@ class EditCandidateActivity : AppCompatActivity() {
         binding.topAppBar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
+    // Remplit tous les champs du formulaire avec les données du candidat
     @SuppressLint("SetTextI18n")
     private fun fillFormWithCandidateData(candidate: Items) {
         binding.firstName.setText(candidate.firstName)
@@ -120,12 +125,14 @@ class EditCandidateActivity : AppCompatActivity() {
             return null
         }
 
+        // Salaire
         val wageDouble = salary.toDoubleOrNull()
         if (wageDouble == null) {
             Toast.makeText(this, "Le salaire est invalide", Toast.LENGTH_SHORT).show()
             return null
         }
 
+        // Retourne une copie mise à jour du candidat
         return candidate.copy(
             firstName = firstName,
             lastName = lastName,
@@ -138,6 +145,7 @@ class EditCandidateActivity : AppCompatActivity() {
         )
     }
 
+    // Configure et affiche le DatePickerDialog
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
 

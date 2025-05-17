@@ -16,9 +16,10 @@ class EditCandidateViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _candidate = MutableLiveData<Items?>()
+    private val _candidate = MutableLiveData<Items?>() // Stock le candidat chargé
     val candidate: LiveData<Items?> = _candidate
 
+    // Charge un candidat depuis la base via son ID
     fun loadCandidate(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getCandidateById(id)
@@ -26,6 +27,7 @@ class EditCandidateViewModel @Inject constructor(
         }
     }
 
+    // Met à jour un candidat dans la base
     fun updateCandidate(candidate: Items) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateCandidate(candidate)

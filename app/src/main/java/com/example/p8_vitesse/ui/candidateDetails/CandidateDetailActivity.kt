@@ -26,7 +26,7 @@ class CandidateDetailActivity: AppCompatActivity() {
     companion object {
         const val EXTRA_CANDIDATE_ID = "extra_candidate_id"
         const val EXTRA_DELETED_ID = "extra_deleted_id"
-
+        // Méthode pour créer l'intent avec un ID de candidat
         fun createIntent(context: Context, candidateId: Long): Intent =
             Intent(context, CandidateDetailActivity::class.java)
                 .putExtra(EXTRA_CANDIDATE_ID, candidateId)
@@ -37,10 +37,10 @@ class CandidateDetailActivity: AppCompatActivity() {
         binding = ActivityCandidateDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setBack()
-        setDeleteButton()
-        setEditButton()
-        setFavoriteButton()
+        setBack() // Bouton de retour
+        setDeleteButton() // Bouton de supression
+        setEditButton() // Bouton de modification
+        setFavoriteButton() // Bouton favoris
 
         viewModel.candidate.observe(this) { candidate ->
             candidate?.let {
@@ -49,11 +49,13 @@ class CandidateDetailActivity: AppCompatActivity() {
         }
     }
 
+    // Gère le bouton retour de la toolbar
     private fun setBack() {
         binding.topAppBar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
     }
 
+    // Remplit les vues avec les infos du candidat
     @SuppressLint("SetTextI18n")
     private fun bindCandidateData(candidate: Items) {
         viewModel.candidate.observe(this) { candidate ->
@@ -79,6 +81,7 @@ class CandidateDetailActivity: AppCompatActivity() {
         }
     }
 
+    // Formate la date de naissance et calcule l'âge
     private fun formatBirthday(birthday: String): String {
         return try {
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
@@ -90,12 +93,14 @@ class CandidateDetailActivity: AppCompatActivity() {
         }
     }
 
+    // Convertit le salaire en livres sterling
     @SuppressLint("DefaultLocale")
     private fun convertToPound(euros: Double): String {
         val rate = 0.865
         return String.format("%.2f", euros * rate)
     }
 
+    // Configuration bouton de suppression
     private fun setDeleteButton() {
         binding.topAppBar.menu.findItem(R.id.ic_delete).setOnMenuItemClickListener {
             MaterialAlertDialogBuilder(this)
@@ -120,7 +125,7 @@ class CandidateDetailActivity: AppCompatActivity() {
             true
         }
     }
-
+    // Configuration du bouton d'édition
     private fun setEditButton() {
         binding.topAppBar.menu.findItem(R.id.ic_edit).setOnMenuItemClickListener {
             val candidateId = intent.getLongExtra(EXTRA_CANDIDATE_ID, -1L)
@@ -131,10 +136,10 @@ class CandidateDetailActivity: AppCompatActivity() {
             true
         }
     }
-
+    // Configuration bouton ajout en favoris
     private fun setFavoriteButton() {
         val favoriteItem = binding.topAppBar.menu.findItem(R.id.ic_favorite)
-
+        // Mise à jour de l'icône
         viewModel.candidate.observe(this) { candidate ->
             if (candidate != null) {
                 favoriteItem.setIcon(
@@ -143,7 +148,7 @@ class CandidateDetailActivity: AppCompatActivity() {
                 )
             }
         }
-
+        // Clique sur l’icône : inverse l'état du favori
         favoriteItem.setOnMenuItemClickListener {
             viewModel.toggleFavorite()
             true

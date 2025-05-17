@@ -8,13 +8,14 @@ import com.example.p8_vitesse.ui.home.candidatesFragments.FavoritesFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
+    // Adaptateur pour gérer les fragments
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> AllCandidatesFragment()
-            1 -> FavoritesFragment()
-            else -> AllCandidatesFragment()
+            0 -> AllCandidatesFragment() // Fragment affichant tous les candidats
+            1 -> FavoritesFragment() // Fargment affichant les favoris
+            else -> AllCandidatesFragment() // Par défaut affiche tous les candidats
         }
     }
-
+    // Nombre total de fragments
     override fun getItemCount(): Int = 2
 }

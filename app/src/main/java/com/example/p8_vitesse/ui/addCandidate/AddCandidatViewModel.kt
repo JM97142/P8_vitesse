@@ -13,6 +13,7 @@ class AddCandidatViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel() {
 
+    // Insère le candidat en base
     fun addCandidate(candidate: Items) {
         viewModelScope.launch {
             val candidateDto = candidate.toDto()

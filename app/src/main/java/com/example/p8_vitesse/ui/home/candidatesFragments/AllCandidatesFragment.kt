@@ -58,6 +58,7 @@ class AllCandidatesFragment: Fragment() {
         }
     }
 
+    // RecyclerView affichant la liste des candidats
     private fun setRecyclerView() {
         candidatesAdapter = CandidatesAdapter { item ->
             val intent = CandidateDetailActivity.createIntent(requireContext(), item.id)
