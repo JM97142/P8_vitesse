@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditCandidateViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     // Flow interne : représente l'état actuel du candidat
@@ -26,7 +28,7 @@ class EditCandidateViewModel @Inject constructor(
 
     // Charge un candidat depuis la base via son ID
     fun loadCandidate(id: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             val result = repository.getCandidateById(id)
             _candidate.value = result
         }
@@ -34,7 +36,7 @@ class EditCandidateViewModel @Inject constructor(
 
     // Met à jour un candidat dans la base
     fun updateCandidate(candidate: Items) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             repository.updateCandidate(candidate)
         }
     }
