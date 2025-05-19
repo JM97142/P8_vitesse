@@ -9,6 +9,8 @@ hiltNavigation = "1.2.0"
 hiltCompiler = "2.50"
 junit = "4.13.2"
 junitVersion = "1.2.1"
+kotlinxCoroutinesTest = "1.6.4"
+mockitoKotlin = "5.4.0"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
@@ -18,7 +20,6 @@ roomCommon = "2.7.0-rc02"
 roomKtx = "2.7.0-rc02"
 roomRuntimeAndroid = "2.7.0-rc02"
 glide = "4.16.0"
-glideCompiler = "4.16.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
@@ -28,6 +29,8 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest"}
+mockito = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -40,7 +43,6 @@ androidx-room-common = { group = "androidx.room", name = "room-common", version.
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideCompiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
