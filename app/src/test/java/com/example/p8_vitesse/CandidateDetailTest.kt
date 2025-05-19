@@ -17,7 +17,7 @@ import org.junit.Test
 import org.mockito.Mockito.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CandidateDetailViewModelTest {
+class CandidateDetailTest {
 
     private lateinit var viewModel: CandidateDetailViewModel
     private lateinit var repository: Repository

@@ -2,20 +2,19 @@ package com.example.p8_vitesse
 
 import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items
-import com.example.p8_vitesse.ui.editCandidate.EditCandidateViewModel
+import com.example.p8_vitesse.ui.addCandidate.AddCandidatViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class EditCandidateTest {
+class AddCandidatViewModelTest {
 
-    private lateinit var viewModel: EditCandidateViewModel
+    private lateinit var viewModel: AddCandidatViewModel
     private lateinit var repository: Repository
 
     private val testDispatcher = StandardTestDispatcher()
@@ -34,10 +33,10 @@ class EditCandidateTest {
     )
 
     @Before
-    fun setup() = runTest {
+    fun setup() {
         Dispatchers.setMain(testDispatcher)
         repository = mock(Repository::class.java)
-        viewModel = EditCandidateViewModel(repository, testDispatcher)
+        viewModel = AddCandidatViewModel(repository)
     }
 
     @After
@@ -46,25 +45,12 @@ class EditCandidateTest {
     }
 
     @Test
-    fun `loadCandidate sets candidate state`() = runTest {
-        // Arrange
-        `when`(repository.getCandidateById(1L)).thenReturn(fakeCandidate)
-
+    fun `addCandidate calls repository with converted DTO`() = runTest {
         // Act
-        viewModel.loadCandidate(1L)
+        viewModel.addCandidate(fakeCandidate)
         advanceUntilIdle()
 
         // Assert
-        assertEquals(fakeCandidate, viewModel.candidate.value)
-    }
-
-    @Test
-    fun `updateCandidate calls repository`() = runTest {
-        // Act
-        viewModel.updateCandidate(fakeCandidate)
-        advanceUntilIdle()
-
-        // Assert
-        verify(repository).updateCandidate(fakeCandidate)
+        verify(repository).insertCandidate(fakeCandidate.toDto())
     }
 }
