@@ -88,6 +88,36 @@ class CandidateDetailActivity: AppCompatActivity() {
                 .into(binding.imgCandidate)
         }
         // TODO: Glide.with(this).load(it.imageUrl).into(imageView)
+        // Action bouton appel
+        binding.callIconButton.setOnClickListener {
+            candidate.phone?.let { phoneNumber ->
+                val intent = Intent(Intent.ACTION_DIAL).apply {
+                    data = android.net.Uri.parse("tel:$phoneNumber")
+                }
+                startActivity(intent)
+            }
+        }
+
+        // Action bouton SMS
+        binding.smsIconButton.setOnClickListener {
+            candidate.phone?.let { phoneNumber ->
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = android.net.Uri.parse("sms:$phoneNumber")
+                }
+                startActivity(intent)
+            }
+        }
+
+        // Action bouton email
+        binding.emailIconButton.setOnClickListener {
+            candidate.email?.let { email ->
+                val intent = Intent(Intent.ACTION_SENDTO).apply {
+                    data = android.net.Uri.parse("mailto:$email")
+                }
+                startActivity(intent)
+            }
+        }
+
     }
 
     // Formate la date de naissance et calcule l'âge
