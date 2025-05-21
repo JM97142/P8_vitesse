@@ -20,7 +20,7 @@ class AllCandidatesViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     // Flux contenant tous les candidats, partagé avec un état initial vide
-    val candidates: StateFlow<List<Items>> = repository.fetchAllCandidatesFlow()
+    private val candidates: StateFlow<List<Items>> = repository.fetchAllCandidatesFlow()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _query = MutableStateFlow("") // requête de recherche

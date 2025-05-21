@@ -156,6 +156,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="45dp"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/phoneIcon"

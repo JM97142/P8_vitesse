@@ -96,31 +96,47 @@ class AddCandidateActivity: AppCompatActivity() {
             val salary = salaryField.text.toString().trim()
             val notes = notesField.text.toString().trim()
 
-            if (firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || email.isEmpty() ||
-                date.isEmpty() || salary.isEmpty() || notes.isEmpty()
-            ) {
-                Toast.makeText(this, "Tous les champs doivent être remplis", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                // Création d'un objet Items et l’envoie au ViewModel
-                val newCandidate = Items(
-                    firstName = firstName,
-                    lastName = lastName,
-                    phone = phone,
-                    email = email,
-                    birthday = date,
-                    wage = salary.toDoubleOrNull()
-                        ?: 0.0,
-                    note = notes,
-                    picture = imageUri?.toString(),
-                    favorite = false
-                )
-                viewModel.addCandidate(newCandidate)
+            when {
+                firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || email.isEmpty() ||
+                        date.isEmpty() || salary.isEmpty() || notes.isEmpty() -> {
+                    Toast.makeText(this, "Tous les champs doivent être remplis", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
-                Toast.makeText(this, "Candidat ajouté avec succès", Toast.LENGTH_SHORT).show()
+                !isValidEmail(email) -> {
+                    emailField.error = "Email invalide"
+                }
 
-                finish()
+                salary.toDoubleOrNull() == null -> {
+                    salaryField.error = "Salaire invalide"
+                }
+
+                else -> {
+                    // Création d'un objet Items et l’envoie au ViewModel
+                    val newCandidate = Items(
+                        firstName = firstName,
+                        lastName = lastName,
+                        phone = phone,
+                        email = email,
+                        birthday = date,
+                        wage = salary.toDoubleOrNull()
+                            ?: 0.0,
+                        note = notes,
+                        picture = imageUri?.toString(),
+                        favorite = false
+                    )
+                    viewModel.addCandidate(newCandidate)
+
+                    Toast.makeText(this, "Candidat ajouté avec succès", Toast.LENGTH_SHORT).show()
+
+                    finish()
+                }
             }
         }
+    }
+
+    // Vérification email format
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

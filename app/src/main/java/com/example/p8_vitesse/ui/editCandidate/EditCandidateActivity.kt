@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -68,9 +67,6 @@ class EditCandidateActivity : AppCompatActivity() {
         }
 
         // Remplit le formulaire avec les données reçues
-        /*viewModel.candidate.observe(this) { candidate ->
-            candidate?.let { fillFormWithCandidateData(it) }
-        }*/
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.candidate.collect { candidate ->
@@ -136,6 +132,12 @@ class EditCandidateActivity : AppCompatActivity() {
             return null
         }
 
+        // Email
+        if (!isValidEmail(email)) {
+            binding.email.error = "Format d'email invalide"
+            return null
+        }
+
         // Salaire
         val wageDouble = salary.toDoubleOrNull()
         if (wageDouble == null) {
@@ -176,5 +178,10 @@ class EditCandidateActivity : AppCompatActivity() {
         )
 
         datePicker.show()
+    }
+
+    // Vérification email format
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

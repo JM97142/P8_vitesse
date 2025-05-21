@@ -20,6 +20,8 @@ roomCommon = "2.7.0-rc02"
 roomKtx = "2.7.0-rc02"
 roomRuntimeAndroid = "2.7.0-rc02"
 glide = "4.16.0"
+retrofit = "2.9.0"
+retrofitConverter = "2.9.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
@@ -43,6 +45,8 @@ androidx-room-common = { group = "androidx.room", name = "room-common", version.
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
+retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitConverter"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
