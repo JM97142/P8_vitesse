@@ -54,6 +54,18 @@ class CandidateDetailActivity: AppCompatActivity() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.conversionRate.collect { rate ->
+                    val candidate = viewModel.candidate.value
+                    if (rate != null && candidate != null) {
+                        val pounds = candidate.wage * rate
+                        binding.poundSalary.text = "soit £ %.2f".format(pounds)
+                    }
+                }
+            }
+        }
     }
 
     // Recharge les infos du candidat depuis la BDD après modification
@@ -73,7 +85,6 @@ class CandidateDetailActivity: AppCompatActivity() {
     private fun bindCandidateData(candidate: Items) {
         binding.topAppBar.title = "${candidate.firstName} ${candidate.lastName}"
         binding.eurosSalary.text = "${candidate.wage} €"
-        binding.poundSalary.text = "soit £ ${convertToPound(candidate.wage)}"
         binding.notesValue.text = candidate.note
         // Format date + âge
         candidate.birthday?.let {

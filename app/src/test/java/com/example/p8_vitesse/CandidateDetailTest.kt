@@ -1,6 +1,8 @@
 package com.example.p8_vitesse
 
 import androidx.lifecycle.SavedStateHandle
+import com.example.p8_vitesse.data.api.CurrencyApiService
+import com.example.p8_vitesse.data.api.CurrencyResponse
 import com.example.p8_vitesse.data.repository.Repository
 import com.example.p8_vitesse.domain.model.Items
 import com.example.p8_vitesse.ui.candidateDetails.CandidateDetailActivity
@@ -21,6 +23,7 @@ class CandidateDetailTest {
 
     private lateinit var viewModel: CandidateDetailViewModel
     private lateinit var repository: Repository
+    private lateinit var currencyApiService: CurrencyApiService
     private lateinit var savedStateHandle: SavedStateHandle
 
     private val testDispatcher = StandardTestDispatcher()
@@ -42,15 +45,26 @@ class CandidateDetailTest {
     fun setup() = runTest {
         Dispatchers.setMain(testDispatcher)
         repository = mock(Repository::class.java)
+        currencyApiService = mock(CurrencyApiService::class.java)
 
         savedStateHandle = SavedStateHandle(
             mapOf(CandidateDetailActivity.EXTRA_CANDIDATE_ID to 1L)
         )
-
+        // Mock de la réponse du CurrencyApiService
+        `when`(currencyApiService.getEuroRates()).thenReturn(
+            CurrencyResponse(
+                date = "2023-01-01",
+                eur = mapOf("gbp" to 0.85)
+            )
+        )
         // Stub suspend function dans une coroutine
         `when`(repository.getCandidateById(1L)).thenReturn(fakeCandidate)
 
-        viewModel = CandidateDetailViewModel(savedStateHandle, repository, testDispatcher)
+        viewModel = CandidateDetailViewModel(
+            savedStateHandle,
+            repository,
+            currencyApiService,
+            testDispatcher)
         advanceUntilIdle() // pour que init {} se termine
     }
 
@@ -77,10 +91,6 @@ class CandidateDetailTest {
 
     @Test
     fun `toggleFavorite updates favorite state and repository`() = runTest {
-        // Forcer l'initialisation à une valeur connue
-        viewModel = CandidateDetailViewModel(savedStateHandle, repository, testDispatcher)
-        advanceUntilIdle()
-
         viewModel.toggleFavorite()
         advanceUntilIdle()
 

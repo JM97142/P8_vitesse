@@ -4,10 +4,10 @@ import retrofit2.http.GET
 
 data class CurrencyResponse(
     val date: String,
-    val gbp: Double // EUR → GBP
+    val eur: Map<String, Double>
 )
 
 interface CurrencyApiService {
-    @GET("eur/gbp.json")
-    suspend fun getEuroToPoundRate(): CurrencyResponse
+    @GET("currencies/eur.json")
+    suspend fun getEuroRates(): CurrencyResponse
 }
