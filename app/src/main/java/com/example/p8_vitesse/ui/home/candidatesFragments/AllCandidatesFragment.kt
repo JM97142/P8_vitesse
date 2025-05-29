@@ -62,6 +62,7 @@ class AllCandidatesFragment: Fragment() {
     private fun setRecyclerView() {
         candidatesAdapter = CandidatesAdapter { item ->
             val intent = CandidateDetailActivity.createIntent(requireContext(), item.id)
+            println(item.picture)
             detailLauncher.launch(intent)
         }
         binding.recyclerviewCandidate.layoutManager = LinearLayoutManager(context)

@@ -86,11 +86,13 @@ class CandidateDetailActivity: AppCompatActivity() {
         binding.topAppBar.title = "${candidate.firstName} ${candidate.lastName}"
         binding.eurosSalary.text = "${candidate.wage} €"
         binding.notesValue.text = candidate.note
+
         // Format date + âge
         candidate.birthday?.let {
             val formatted = formatBirthday(it)
             binding.aboutAge.text = formatted
         }
+
         // Charge l’image avec Glide
         if (!candidate.picture.isNullOrEmpty()) {
             Glide.with(this)
@@ -98,7 +100,7 @@ class CandidateDetailActivity: AppCompatActivity() {
                 .placeholder(R.drawable.image_placeholder) // image par défaut si null
                 .into(binding.imgCandidate)
         }
-        // TODO: Glide.with(this).load(it.imageUrl).into(imageView)
+
         // Action bouton appel
         binding.callIconButton.setOnClickListener {
             candidate.phone?.let { phoneNumber ->
@@ -141,13 +143,6 @@ class CandidateDetailActivity: AppCompatActivity() {
         } catch (e: Exception) {
             "Date invalide"
         }
-    }
-
-    // Convertit le salaire en livres sterling
-    @SuppressLint("DefaultLocale")
-    private fun convertToPound(euros: Double): String {
-        val rate = 0.865
-        return String.format("%.2f", euros * rate)
     }
 
     // Configuration bouton de suppression

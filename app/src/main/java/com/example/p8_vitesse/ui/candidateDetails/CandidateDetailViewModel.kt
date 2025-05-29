@@ -79,7 +79,7 @@ class CandidateDetailViewModel @Inject constructor(
                 val rate = response.eur["gbp"]
                 if (rate != null) {
                     _conversionRate.value = rate
-                    Log.d("Currency", "Taux EUR → GBP: $rate")
+                    println("Taux EUR → GBP: $rate")
                 } else {
                     _conversionRate.value = defaultGbpRate
                 }
