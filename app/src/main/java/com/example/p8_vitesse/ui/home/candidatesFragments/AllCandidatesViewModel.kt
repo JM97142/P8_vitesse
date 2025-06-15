@@ -23,7 +23,7 @@ class AllCandidatesViewModel @Inject constructor(
     private val candidates: StateFlow<List<Items>> = repository.fetchAllCandidatesFlow()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    private val _query = MutableStateFlow("") // requête de recherche
+    val _query = MutableStateFlow("") // requête de recherche
 
     // Liste filtrée selon la recherche (nom/prénom)
     @OptIn(ExperimentalCoroutinesApi::class)

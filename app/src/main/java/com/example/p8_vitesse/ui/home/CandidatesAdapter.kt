@@ -32,6 +32,7 @@ class CandidatesAdapter(
                 } else {
                     binding.imgCandidate.setImageResource(R.drawable.image_placeholder)
                 }
+
                 // Gestion du clic sur l'item
                 binding.root.setOnClickListener {
                     onItemClick(items)

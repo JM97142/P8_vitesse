@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import com.example.p8_vitesse.R
 import com.example.p8_vitesse.databinding.ActivityMainBinding
 import com.example.p8_vitesse.ui.addCandidate.AddCandidateActivity
@@ -16,6 +17,8 @@ import com.example.p8_vitesse.ui.home.candidatesFragments.AllCandidatesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,9 +37,18 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setContentView(binding.root)
+
         setupSearch() // Barre de recherche
         setTableLayout() // Tabs et ViewPager
         setupFab() // Bouton ajout candidat
+    }
+
+    // Configuration de la logique de recherche
+    private fun setupSearch() {
+        binding.searchEditText.addTextChangedListener { editable ->
+            val query = editable?.toString().orEmpty()
+            viewModel.setQuery(query)
+        }
     }
 
     // Configuration des onglets (All / favorites)
@@ -50,20 +62,6 @@ class MainActivity : AppCompatActivity() {
                 1 -> tab.text = getString(R.string.tab_item_2)
             }
         }.attach()
-    }
-
-    // Configuration de la logique de recherche
-    private fun setupSearch() {
-        binding.searchBar.setOnClickListener {
-            binding.svSearch.show()
-            binding.svSearch.requestFocus()
-        }
-        // Mise à jour du query dans le ViewModel à chaque saisie
-        binding.svSearch.editText.addTextChangedListener { editable ->
-            val query = editable?.toString().orEmpty()
-            viewModel.setQuery(query)
-            binding.searchBar.setText(query)
-        }
     }
 
     // Configuration du bouton ajout d'un candidat
