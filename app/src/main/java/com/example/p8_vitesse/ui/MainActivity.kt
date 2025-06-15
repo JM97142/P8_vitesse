@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.lifecycleScope
 import com.example.p8_vitesse.R
 import com.example.p8_vitesse.databinding.ActivityMainBinding
 import com.example.p8_vitesse.ui.addCandidate.AddCandidateActivity
@@ -17,8 +16,6 @@ import com.example.p8_vitesse.ui.home.candidatesFragments.AllCandidatesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

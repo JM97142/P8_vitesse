@@ -42,6 +42,7 @@ class AllCandidatesViewModel @Inject constructor(
     fun setQuery(text: String) {
         _query.value = text
     }
+
     // Supprime un candidat via son Id
     fun deleteCandidate(id: Long) {
         viewModelScope.launch {
